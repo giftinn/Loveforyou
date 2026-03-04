@@ -242,6 +242,7 @@ pointer-events:none;
 
 <canvas id="confettiCanvas"></canvas>
 
+<audio id="bgm" src="song.mp3" loop></audio>
 <div id="app">
 
 <!-- welcome -->
@@ -312,21 +313,28 @@ Tap to reveal our memory
    SLIDE NAVIGATION
 ================================================= */
 
-const cards = document.querySelectorAll('.card');
-let page = 0;
+const cards=document.querySelectorAll('.card');
+let page=0;
+const music=document.getElementById("bgm");
+music.volume=0.4;
+let musicStarted=false;
 
 function show(){
-    cards.forEach(c => c.classList.remove('active'));
-    cards[page].classList.add('active');
-
-    if(page === 3) startTimer();
+cards.forEach(c=>c.classList.remove('active'));
+cards[page].classList.add('active');
+if(page===3)startTimer();
 }
 
 function next(){
-    page++;
-    show();
+page++;
 
-    if(page === 2) loadQuestion();
+if(page===1 && !musicStarted){
+music.play();
+musicStarted=true;
+}
+
+show();
+if(page===2)loadQuestion();
 }
 
 
